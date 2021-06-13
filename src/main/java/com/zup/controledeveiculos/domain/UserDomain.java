@@ -2,6 +2,8 @@ package com.zup.controledeveiculos.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,16 +15,16 @@ public class UserDomain {
 	@Column
 	private Long  id;
 	
-	@Column
+	@Column(nullable = false)
 	private String nome;
 	
-	@Column
+	@Column (unique = true, nullable = false)
 	private String email;
 	
-	@Column
-	private String cpf ; 
+	@Column (unique = true, nullable = false)
+	private String cpf; 
 	
-	@Column
+	@Column(nullable = false)
 	private String dataDeNascimento;
 	
 	public Long getId() {
