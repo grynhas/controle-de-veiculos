@@ -19,52 +19,52 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.zup.controledeveiculos.domain.UserDomain;
-import com.zup.controledeveiculos.service.UserService;
+import com.zup.controledeveiculos.domain.CarDomain;
+import com.zup.controledeveiculos.service.CarService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/cars")
 @Validated
-public class UserController {
+public class CarController {
 	
 	@Autowired
-	private UserService userService; 
+	private CarService carService; 
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<UserDomain> add(@RequestBody UserDomain user){
-		UserDomain createUserDomain = userService.saveUser(user);
+	public ResponseEntity<CarDomain> add(@RequestBody CarDomain car){
+		CarDomain createCarDomain = carService.saveCar(car);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
-				.buildAndExpand(createUserDomain.getId())
+				.buildAndExpand(createCarDomain.getId())
 				.toUri();
 	
-		return ResponseEntity.created(uri).body(createUserDomain);
+		return ResponseEntity.created(uri).body(createCarDomain);
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Optional<UserDomain>> findById(@PathVariable Long id){
-		return ResponseEntity.ok().body(userService.listUser(id));
+	public ResponseEntity<Optional<CarDomain>> findById(@PathVariable Long id){
+		return ResponseEntity.ok().body(carService.listCar(id));
 	}
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<UserDomain>> listAll() {
-		return ResponseEntity.ok().body(userService.listAllUsers());
+	public ResponseEntity<List<CarDomain>> listAll() {
+		return ResponseEntity.ok().body(carService.listAllCars());
 	}
 	
 	@RequestMapping("/{id}")
 	@PutMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<UserDomain> updateUser(@RequestBody UserDomain user,@PathVariable Long id ) {
-		return ResponseEntity.ok().body(userService.updateUserDomain(id, user));
+	public ResponseEntity<CarDomain> updateUser(@RequestBody CarDomain user,@PathVariable Long id ) {
+		return ResponseEntity.ok().body(carService.updateCarDomain(id, user));
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
-		userService.deleteUser(id);
+		carService.deleteCar(id);
 	}
 	
 }

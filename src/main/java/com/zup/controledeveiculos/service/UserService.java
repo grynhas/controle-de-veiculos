@@ -33,11 +33,13 @@ public class UserService {
 	}
 	
 	public UserDomain updateUserDomain(Long id, UserDomain user) {
-		
 		Optional<UserDomain> userOptional = userRepository.findById(id);
-		
 		return userRepository.save(user);
-		
+	}
+	
+	public void deleteUser(Long id) { 
+		Optional<UserDomain> userOptional = userRepository.findById(id);
+		userRepository.deleteById(id);
 	}
 }
 
