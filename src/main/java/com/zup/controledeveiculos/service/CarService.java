@@ -17,11 +17,16 @@ public class CarService {
 	@Autowired
 	CarRepository carRepository;
 	
+	@Autowired
+	ApiService apiService;
+	
 	public CarService(CarRepository carRepository) {
 		this.carRepository = carRepository;
 	}
 
 	public CarDomain saveCar(CarDomain car) {
+		String valor = apiService.buscarCarroNaFipe(car.getBrand(), car.getModel(), car.getYear()).getValor();
+		car.setValue(valor);
 		return carRepository.save(car);
 	}
 	
@@ -40,6 +45,10 @@ public class CarService {
 	
 	public void deleteCar(Long id) { 
 		Optional<CarDomain> userOptional = carRepository.findById(id);
+		
+		if(!userOptional.isPresent()) 
+			System.out.println("Usuário não existe");
+		
 		carRepository.deleteById(id);
 	}
 }

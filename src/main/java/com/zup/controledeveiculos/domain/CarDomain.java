@@ -5,19 +5,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table (name = "cars")
 public class CarDomain {
 	
-	   @Id
+	   	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    @Column(name = "id_cars")
+	    @Column(name = "id_car")
+
 	    private Long id;
 
 	    @Column(nullable = false)
@@ -32,16 +29,9 @@ public class CarDomain {
 	    @Column(nullable = false)
 	    private String value;
 
-	    @Column
 	    private String dayRotation;
 
-	    @Column
 	    private Boolean activeRotation = false;
-
-	    @ManyToOne
-	    @JoinColumn (name = "id_users", nullable = false)
-	    @JsonBackReference
-	    private UserDomain users;
 
 		public Long getId() {
 			return id;
@@ -71,9 +61,10 @@ public class CarDomain {
 			return activeRotation;
 		}
 
-		public UserDomain getUsers() {
-			return users;
+		public void setValue(String value) {
+			this.value = value;
 		}
-	
+
+
 
 }

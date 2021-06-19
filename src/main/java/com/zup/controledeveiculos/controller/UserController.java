@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.zup.controledeveiculos.domain.CarDomain;
 import com.zup.controledeveiculos.domain.UserDomain;
 import com.zup.controledeveiculos.service.UserService;
 
@@ -32,7 +33,7 @@ public class UserController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<UserDomain> add(@RequestBody UserDomain user){
+	 public ResponseEntity<UserDomain> saveUser(@RequestBody UserDomain user) {
 		UserDomain createUserDomain = userService.saveUser(user);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
@@ -65,6 +66,12 @@ public class UserController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		userService.deleteUser(id);
+	}
+	
+	@PostMapping("{id}/cars")
+	 public ResponseEntity<Void> saveUser(@PathVariable Long id, @RequestBody List<CarDomain> cars) {
+		userService.comprarCarro(id, cars);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 }

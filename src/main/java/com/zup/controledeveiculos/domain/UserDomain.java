@@ -1,17 +1,21 @@
 package com.zup.controledeveiculos.domain;
 
-import java.time.LocalDateTime;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 @Table (name = "users")
@@ -20,30 +24,33 @@ public class UserDomain {
 	 	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name = "id_user")
-	    private Long id;
+	    private Long idUser;
 
-	    @Column(name = "first_name", nullable = false)
-	    private String firstName;
+	    @Column(nullable = false)
+	    private String name;
 
-	    @Column(name = "email", unique = true, nullable = false)
+	    @Column(unique = true, nullable = false)
 	    private String email;
 
-	    @Column(name = "cpf", unique = true, nullable = false)
+	    @Column(unique = true, nullable = false)
 	    private String cpf;
 
-	    @Column(name = "birth_date")
-	    private LocalDateTime birthDate;
+	    @Column
+	    @JsonFormat(pattern="dd/MM/yyyy")
+	    private LocalDate birthDate;
 
-	    @OneToMany (mappedBy = "users")
-	    @JsonManagedReference
-	    private Set<CarDomain> cars;
+	    @ManyToMany(cascade=CascadeType.ALL)
+	    @JoinTable(name="user_has_cars", 
+	    joinColumns= {@JoinColumn(name="id_user")},
+	    inverseJoinColumns= {@JoinColumn(name="id_car")})
+	    private List<CarDomain> cars;
 
 		public Long getId() {
-			return id;
+			return idUser;
 		}
 
-		public String getFirstName() {
-			return firstName;
+		public String getName() {
+			return name;
 		}
 
 		public String getEmail() {
@@ -54,12 +61,17 @@ public class UserDomain {
 			return cpf;
 		}
 
-		public LocalDateTime getBirthDate() {
+		public LocalDate getBirthDate() {
 			return birthDate;
 		}
 
-		public Set<CarDomain> getCars() {
+		public List<CarDomain> getCars() {
 			return cars;
 		}
+
+		public void setCars(List<CarDomain> cars) {
+			this.cars = cars;
+		}
+		
 
 }

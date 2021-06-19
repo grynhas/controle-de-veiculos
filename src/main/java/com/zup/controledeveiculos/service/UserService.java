@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zup.controledeveiculos.domain.CarDomain;
 import com.zup.controledeveiculos.domain.UserDomain;
 import com.zup.controledeveiculos.repository.UserRepository;
 
@@ -40,6 +41,20 @@ public class UserService {
 	public void deleteUser(Long id) { 
 		Optional<UserDomain> userOptional = userRepository.findById(id);
 		userRepository.deleteById(id);
+	}
+	
+	public void comprarCarro(Long id, List<CarDomain> listCars) {
+		Optional<UserDomain> userOptional = userRepository.findById(id);
+		
+		if(!userOptional.isPresent()) 
+			System.out.println("Esse usuário não existe, tá me tirando?");
+		
+		UserDomain usuario = userOptional.get();
+		List<CarDomain> cars = usuario.getCars();
+		cars.addAll(listCars);
+		usuario.setCars(cars);
+		
+		userRepository.saveAndFlush(usuario);
 	}
 }
 
