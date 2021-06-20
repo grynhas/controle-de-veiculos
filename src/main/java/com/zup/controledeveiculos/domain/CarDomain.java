@@ -61,6 +61,14 @@ public class CarDomain {
 			return activeRotation;
 		}
 
+		public void setDayRotation(String dayRotation) {
+			this.dayRotation = dayRotation;
+		}
+
+		public void setActiveRotation(Boolean activeRotation) {
+			this.activeRotation = activeRotation;
+		}
+
 		public void setValue(String value) {
 			this.value = value;
 		}

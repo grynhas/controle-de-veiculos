@@ -68,9 +68,9 @@ public class UserController {
 		userService.deleteUser(id);
 	}
 	
-	@PostMapping("{id}/cars")
-	 public ResponseEntity<Void> saveUser(@PathVariable Long id, @RequestBody List<CarDomain> cars) {
-		userService.comprarCarro(id, cars);
+	@PostMapping("{id}/cars/{carId}")
+	 public ResponseEntity<Void> saveUser(@PathVariable Long id, @PathVariable Long carId) {
+		userService.comprarCarro(id, carId);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
